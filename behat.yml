@@ -1,0 +1,7 @@
+default:
+  suites:
+    default:
+      paths:
+        - "%paths.base%/test/features/"
+      contexts:
+        - Test\FeatureContext

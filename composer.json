@@ -1,0 +1,21 @@
+{
+    "name": "matthiasnoback/gherkin-features-html-exporter",
+    "require": {
+        "behat/gherkin": "^4.8",
+        "symfony/finder": "^5.2"
+    },
+    "require-dev": {
+        "behat/behat": "^3.8",
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "GherkinHtmlExporter\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\": "test/"
+        }
+    }
+}
