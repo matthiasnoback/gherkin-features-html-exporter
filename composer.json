@@ -1,5 +1,6 @@
 {
     "name": "matthiasnoback/gherkin-features-html-exporter",
+    "description": "A tool for exporting Gherkin features to HTML",
     "require": {
         "behat/gherkin": "^4.8"
     },
