@@ -69,3 +69,42 @@ Feature: Exporting features to HTML
       </div>
     </div>
     """
+
+  Scenario: combine multiple features by tag in a single file
+    Given the directory "features" has a file called "interesting_1.feature" containing:
+    """
+    @interesting
+    Feature: to be included 1
+      Scenario:
+        Given step
+    """
+    And this directory has a file called "interesting_2.feature" containing:
+    """
+    @interesting
+    Feature: to be included 2
+      Scenario:
+        Given step
+    """
+    And this directory has a file called "irrelevant.feature" containing:
+    """
+    @irrelevant
+    Feature: irrelevant
+      Scenario:
+        Given step
+    """
+    When I export this directory to HTML providing the tag "interesting"
+    Then the export directory should have a file called "interesting.html" containing:
+    """
+    <div class="feature">
+      <div class="feature-title">
+        <span class="keyword">Feature</span>: <span class="title">to be included 1</span>
+      </div>
+    """
+    And this file should also contain:
+    """
+    <div class="feature">
+      <div class="feature-title">
+        <span class="keyword">Feature</span>: <span class="title">to be included 2</span>
+      </div>
+    """
+    And the file "interesting.html" should not contain "irrelevant"

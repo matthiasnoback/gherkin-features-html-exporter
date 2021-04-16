@@ -9,7 +9,8 @@ assert($scenario instanceof ScenarioNode);
 ?>
 <div class="scenario">
     <div class="scenario-title">
-        <span class="keyword"><?php echo $this->escape($scenario->getKeyword()); ?></span> <span class="title"><?php echo $this->escape($scenario->getTitle()); ?></span>
+        <span class="keyword"><?php echo $this->escape($scenario->getKeyword()); ?></span>
+        <?php if ($scenario->getTitle() !== null) { ?><span class="title"><?php echo $this->escape($scenario->getTitle()); ?></span><?php } ?>
     </div>
     <div class="steps">
         <?php

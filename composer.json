@@ -1,8 +1,7 @@
 {
     "name": "matthiasnoback/gherkin-features-html-exporter",
     "require": {
-        "behat/gherkin": "^4.8",
-        "symfony/finder": "^5.2"
+        "behat/gherkin": "^4.8"
     },
     "require-dev": {
         "behat/behat": "^3.8",
