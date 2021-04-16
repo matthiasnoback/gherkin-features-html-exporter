@@ -1,9 +1,11 @@
 <?php
 declare(strict_types=1);
 
+/** @var FeatureNode $feature */
+
 use Behat\Gherkin\Node\FeatureNode;
 
-/** @var FeatureNode $feature */
+assert($feature instanceof FeatureNode);
 
 ?>
 <div class="feature">
@@ -11,6 +13,6 @@ use Behat\Gherkin\Node\FeatureNode;
         <span class="keyword"><?php echo $this->escape($feature->getKeyword()); ?></span>: <span class="title"><?php echo $this->escape($feature->getTitle()); ?></span>
     </div>
     <?php foreach ($feature->getScenarios() as $scenario) {
-        include __DIR__ . '/scenario.html.php';
+        require __DIR__ . '/scenario.html.php';
     } ?>
 </div>

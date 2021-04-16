@@ -63,9 +63,10 @@ final class FeatureContext implements Context
 
     private function assertHtmlEquals(string $expected, string $actual): void
     {
-        Assert::assertEquals(
+        Assert::assertStringContainsString(
             $this->reformatHtml($expected),
-            $this->reformatHtml($actual)
+            $this->reformatHtml($actual),
+            "Expected:\n\n{$expected}\n\nActual:{$actual}"
         );
     }
 

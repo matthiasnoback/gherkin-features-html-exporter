@@ -1,6 +1,11 @@
 <?php
 declare(strict_types=1);
-/** @var \Behat\Gherkin\Node\ScenarioNode $scenario */
+/** @var ScenarioNode $scenario */
+
+use Behat\Gherkin\Node\ScenarioNode;
+
+assert($scenario instanceof ScenarioNode);
+
 ?>
 <div class="scenario">
     <div class="scenario-title">
@@ -9,7 +14,7 @@ declare(strict_types=1);
     <div class="steps">
         <?php
         foreach ($scenario->getSteps() as $step) {
-            include __DIR__ . '/step.html.php';
+            require __DIR__ . '/step.html.php';
         }
         ?>
     </div>
