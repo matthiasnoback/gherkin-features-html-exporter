@@ -2,7 +2,8 @@
     "name": "matthiasnoback/gherkin-features-html-exporter",
     "description": "A tool for exporting Gherkin features to HTML",
     "require": {
-        "behat/gherkin": "^4.8"
+        "behat/gherkin": "^4.8",
+        "symfony/console": "^5.2"
     },
     "require-dev": {
         "behat/behat": "^3.8",
@@ -17,5 +18,8 @@
         "psr-4": {
             "Test\\": "test/"
         }
-    }
+    },
+    "bin": [
+        "bin/export.php"
+    ]
 }

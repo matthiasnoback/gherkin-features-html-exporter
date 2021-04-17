@@ -130,7 +130,7 @@ Feature: Exporting features to HTML
     <head>
       <meta charset="UTF-8">
       <title>interesting features</title>
-      <style type="text/css">.feature-title { font-size: 2em; }</style>
+      <style>.feature-title { font-size: 2em; }</style>
     </head>
     <body>
       <div class="feature">

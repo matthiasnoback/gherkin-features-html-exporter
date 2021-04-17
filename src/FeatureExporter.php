@@ -33,6 +33,10 @@ final class FeatureExporter
 
     public function exportDirectory(string $featuresDirectory, string $targetDirectory, ?string $tag, ?string $relativeStylesheetPathName): void
     {
+        if (!is_dir($targetDirectory)) {
+            mkdir($targetDirectory, 0777, true);
+        }
+
         $gherkin = new Gherkin();
         $gherkin->addLoader(new DirectoryLoader($gherkin));
         $gherkin->addLoader(new GherkinFileLoader($this->parser));
