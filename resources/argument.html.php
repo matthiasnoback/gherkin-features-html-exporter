@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use Behat\Gherkin\Node\ArgumentInterface;
 use Behat\Gherkin\Node\TableNode;
+use GherkinHtmlExporter\Html;
 
 /** @var ArgumentInterface $argument */
 assert($argument instanceof ArgumentInterface);
@@ -17,7 +18,7 @@ if ($argument instanceof TableNode) {
                 <tr>
                     <?php foreach ($row as $cell) {
                         ?>
-                        <td><?php echo $this->escape($cell); ?></td><?php
+                        <td><?php echo Html::escape($cell); ?></td><?php
                     }
                     ?>
                 </tr>

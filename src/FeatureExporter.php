@@ -16,8 +16,9 @@ use ReflectionClass;
 final class FeatureExporter
 {
     private GherkinParser $parser;
+    private Notifications $notifications;
 
-    public function __construct()
+    public function __construct(Notifications $notifications)
     {
         // Copied from \Codeception\Test\Loader\Gherkin
         $gherkin = new ReflectionClass(Gherkin::class);
@@ -26,6 +27,8 @@ final class FeatureExporter
         $keywords = new GherkinKeywords($i18n);
         $lexer = new GherkinLexer($keywords);
         $this->parser = new GherkinParser($lexer);
+
+        $this->notifications = $notifications;
     }
 
     public function exportDirectory(string $featuresDirectory, string $targetDirectory, ?string $tag): void
@@ -42,7 +45,7 @@ final class FeatureExporter
         if (is_string($tag)) {
             $this->exportAllFeaturesToSingleFile($features, $targetDirectory, $tag);
         } else {
-            $this->exportAllFeaturesSeparately($features);
+            $this->exportAllFeaturesSeparately($features, $targetDirectory);
         }
     }
 
@@ -60,11 +63,6 @@ final class FeatureExporter
         return $html;
     }
 
-    private function escape(string $value): string
-    {
-        return htmlspecialchars($value, ENT_QUOTES);
-    }
-
     private function exportAllFeaturesToSingleFile(array $features, string $targetDirectory, string $tag): void
     {
         $html = $this->renderTemplate(
@@ -77,9 +75,11 @@ final class FeatureExporter
         $targetFilePath = $targetDirectory . '/' . $tag . '.html';
 
         file_put_contents($targetFilePath, $html);
+
+        $this->notifications->htmlFileWasCreated($targetFilePath);
     }
 
-    private function exportAllFeaturesSeparately(array $features): void
+    private function exportAllFeaturesSeparately(array $features, string $targetDirectory): void
     {
         foreach ($features as $feature) {
             $html = $this->renderTemplate(
@@ -89,10 +89,14 @@ final class FeatureExporter
                 ]
             );
 
-            $targetFilePath = str_replace('.feature', '.html', $feature->getFile());
-            $targetFile = $targetFilePath;
+            $sourceFile = new \SplFileInfo($feature->getFile());
+            $fileNameWithoutExtension = $sourceFile->getBasename('.feature');
 
-            file_put_contents($targetFile, $html);
+            $targetFilePath = $targetDirectory . '/' . $fileNameWithoutExtension . '.html';
+
+            file_put_contents($targetFilePath, $html);
+
+            $this->notifications->htmlFileWasCreated($targetFilePath);
         }
     }
 }

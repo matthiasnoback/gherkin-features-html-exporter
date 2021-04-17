@@ -25,7 +25,7 @@ final class FeatureContext implements Context
         $this->exportDir = sys_get_temp_dir() . '/' . uniqid('export');
         mkdir($this->exportDir);
 
-        $this->exporter = new FeatureExporter();
+        $this->exporter = new FeatureExporter(new EchoNotifications());
     }
 
     /**
