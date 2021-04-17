@@ -108,3 +108,36 @@ Feature: Exporting features to HTML
       </div>
     """
     And the file "interesting.html" should not contain "irrelevant"
+
+  Scenario: wrap everything in a layout, add a title, and include the CSS
+
+    Given the directory "features" has a file called "interesting.feature" containing:
+    """
+    @interesting
+    Feature: to be included
+      Scenario:
+        Given step
+    """
+    And this directory has a file called "style.css" containing:
+    """
+    .feature-title { font-size: 2em; }
+    """
+    When I export this directory to HTML providing the tag "interesting" and the stylesheet "style.css"
+    Then the export directory should have a file called "interesting.html" containing:
+    """
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <title>interesting features</title>
+      <style type="text/css">.feature-title { font-size: 2em; }</style>
+    </head>
+    <body>
+      <div class="feature">
+    """
+    And this file should also contain:
+    """
+      </div>
+    </body>
+    </html>
+    """

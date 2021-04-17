@@ -31,7 +31,7 @@ final class FeatureExporter
         $this->notifications = $notifications;
     }
 
-    public function exportDirectory(string $featuresDirectory, string $targetDirectory, ?string $tag): void
+    public function exportDirectory(string $featuresDirectory, string $targetDirectory, ?string $tag, ?string $relativeStylesheetPathName): void
     {
         $gherkin = new Gherkin();
         $gherkin->addLoader(new DirectoryLoader($gherkin));
@@ -42,10 +42,18 @@ final class FeatureExporter
         /** @var FeatureNode[] $features */
         $features = $gherkin->load($featuresDirectory);
 
+        $stylesheetFilePath = null;
+        if (is_string($relativeStylesheetPathName)) {
+            $stylesheetFilePath = $featuresDirectory . '/' . $relativeStylesheetPathName;
+            if (!is_file($stylesheetFilePath)) {
+                $stylesheetFilePath = null;
+            }
+        }
+
         if (is_string($tag)) {
-            $this->exportAllFeaturesToSingleFile($features, $targetDirectory, $tag);
+            $this->exportAllFeaturesToSingleFile($features, $targetDirectory, $tag, $stylesheetFilePath);
         } else {
-            $this->exportAllFeaturesSeparately($features, $targetDirectory);
+            $this->exportAllFeaturesSeparately($features, $targetDirectory, $stylesheetFilePath);
         }
     }
 
@@ -63,12 +71,14 @@ final class FeatureExporter
         return $html;
     }
 
-    private function exportAllFeaturesToSingleFile(array $features, string $targetDirectory, string $tag): void
+    private function exportAllFeaturesToSingleFile(array $features, string $targetDirectory, string $tag, ?string $stylesheet): void
     {
         $html = $this->renderTemplate(
             __DIR__ . '/../resources/features.html.php',
             [
-                'features' => $features
+                'features' => $features,
+                'stylesheet' => $stylesheet,
+                'tag' => $tag
             ]
         );
 
@@ -79,13 +89,14 @@ final class FeatureExporter
         $this->notifications->htmlFileWasCreated($targetFilePath);
     }
 
-    private function exportAllFeaturesSeparately(array $features, string $targetDirectory): void
+    private function exportAllFeaturesSeparately(array $features, string $targetDirectory, ?string $stylesheet): void
     {
         foreach ($features as $feature) {
             $html = $this->renderTemplate(
                 __DIR__ . '/../resources/feature.html.php',
                 [
-                    'feature' => $feature
+                    'feature' => $feature,
+                    'stylesheet' => $stylesheet
                 ]
             );
 

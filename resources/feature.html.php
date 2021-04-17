@@ -1,19 +1,14 @@
 <?php
 declare(strict_types=1);
 
+use Behat\Gherkin\Node\FeatureNode;
+
 /** @var FeatureNode $feature */
 
-use Behat\Gherkin\Node\FeatureNode;
-use GherkinHtmlExporter\Html;
+$title = $feature->getTitle();
 
-assert($feature instanceof FeatureNode);
+require __DIR__  . '/_header.html.php';
 
-?>
-<div class="feature">
-    <div class="feature-title">
-        <span class="keyword"><?php echo Html::escape($feature->getKeyword()); ?></span>: <span class="title"><?php echo Html::escape($feature->getTitle()); ?></span>
-    </div>
-    <?php foreach ($feature->getScenarios() as $scenario) {
-        require __DIR__ . '/scenario.html.php';
-    } ?>
-</div>
+require __DIR__ . '/_feature.html.php';
+
+require __DIR__  . '/_footer.html.php';

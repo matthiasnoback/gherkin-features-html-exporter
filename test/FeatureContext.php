@@ -52,10 +52,11 @@ final class FeatureContext implements Context
     /**
      * @When I export this directory to HTML
      * @When I export this directory to HTML providing the tag :tag
+     * @When I export this directory to HTML providing the tag :tag and the stylesheet :stylesheet
      */
-    public function export(?string $tag = null): void
+    public function export(?string $tag = null, ?string $stylesheet = null): void
     {
-        $this->exporter->exportDirectory($this->featureDirectory, $this->exportDir, $tag);
+        $this->exporter->exportDirectory($this->featureDirectory, $this->exportDir, $tag, $stylesheet);
     }
 
     /**
