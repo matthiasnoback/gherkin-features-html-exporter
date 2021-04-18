@@ -93,6 +93,55 @@ Feature: Exporting features to HTML
     </div>
     """
 
+  Scenario: convert a scenario outline with examples
+
+    Given the directory "features" has a file called "scenario_outline.feature" containing:
+    """
+    Feature: Feature title
+
+      Scenario Outline:
+        Given step: <Value>
+
+        Examples:
+          | Value 1 | Value 2 |
+          | 1       | 2       |
+          | 3       | 4       |
+    """
+    When I export this directory to HTML
+    Then the export directory should have a file called "scenario_outline.html" containing:
+    """
+    <div class="scenario scenario-outline">
+      <div class="scenario-title">
+        <span class="keyword">Scenario Outline</span>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="keyword">Given</span> <span class="text">step: &lt;Value&gt;</span>
+        </div>
+      </div>
+      <div class="examples">
+        <div class="example-table">
+          <table>
+            <tbody>
+            <tr>
+              <td>Value 1</td>
+              <td>Value 2</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>4</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    """
+
   Scenario: combine multiple features by tag in a single file
     Given the directory "features" has a file called "interesting_1.feature" containing:
     """

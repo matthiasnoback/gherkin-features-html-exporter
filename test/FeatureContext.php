@@ -103,6 +103,9 @@ final class FeatureContext implements Context
 
     private function assertHtmlContains(string $expected, string $actual): void
     {
+        $expected = $this->reformatHtml($expected);
+        $actual = $this->reformatHtml($actual);
+
         Assert::assertStringContainsString(
             $this->reformatHtml($expected),
             $this->reformatHtml($actual),
@@ -112,9 +115,12 @@ final class FeatureContext implements Context
 
     private function assertHtmlNotContains(string $expected, string $actual): void
     {
+        $expected = $this->reformatHtml($expected);
+        $actual = $this->reformatHtml($actual);
+
         Assert::assertStringNotContainsString(
-            $this->reformatHtml($expected),
-            $this->reformatHtml($actual),
+            $expected,
+            $actual,
             "Expected:\n\n{$expected}\n\nActual:{$actual}"
         );
     }
@@ -122,7 +128,7 @@ final class FeatureContext implements Context
     private function reformatHtml(string $originalHtml): string
     {
         // A silly, yet effective way of removing whitespace between HTML elements:
-        $cleanedUpHtml = preg_replace('/(>)([\s]+)(<)/', '$1$3', $originalHtml);
+        $cleanedUpHtml = preg_replace('/(>)([\s]+)(<)/', "$1\n$3", $originalHtml);
         assert(is_string($cleanedUpHtml));
 
         return trim($cleanedUpHtml);

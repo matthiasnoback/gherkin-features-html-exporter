@@ -12,22 +12,10 @@ assert($argument instanceof ArgumentInterface);
 if ($argument instanceof TableNode) {
     ?>
     <div class="table-argument">
-        <table>
-            <tbody>
-            <?php foreach ($argument->getRows() as $row) {
-                ?>
-                <tr>
-                    <?php foreach ($row as $cell) {
-                        ?>
-                        <td><?php echo Html::escape($cell); ?></td><?php
-                    }
-                    ?>
-                </tr>
-                <?php
-            }
-            ?>
-            </tbody>
-        </table>
+        <?php
+        $table = $argument;
+        require __DIR__ . '/_table.php';
+        ?>
     </div>
     <?php
 }
