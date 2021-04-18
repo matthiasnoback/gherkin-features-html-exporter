@@ -27,7 +27,7 @@ assert($scenario instanceof OutlineNode);
             ?>
             <div class="example-table">
                 <?php
-                require __DIR__ . '/_table.php';
+                require __DIR__ . '/_table.html.php';
                 ?>
             </div>
             <?php

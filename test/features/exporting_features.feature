@@ -239,3 +239,49 @@ Feature: Exporting features to HTML
     </body>
     </html>
     """
+
+  Scenario: the feature description will be parsed as Markdown
+
+    Given the directory "features" has a file called "feature_description.feature" containing:
+      """
+      Feature:
+
+        Paragraph 1
+
+        Paragraph 2
+      """
+    When I export this directory to HTML
+    Then the export directory should have a file called "feature_description.html" containing:
+    """
+    <div class="feature">
+      <div class="feature-title"><span class="keyword">Feature</span>:</div>
+      <div class="description">
+        <p>Paragraph 1</p>
+        <p>Paragraph 2</p>
+      </div>
+    """
+
+  Scenario: the scenario description will be parsed as Markdown
+
+    Given the directory "features" has a file called "scenario_description.feature" containing:
+      """
+      Feature:
+
+        Scenario: Scenario title
+
+          Paragraph 1
+
+          Paragraph 2
+      """
+    When I export this directory to HTML
+    Then the export directory should have a file called "scenario_description.html" containing:
+    """
+    <div class="scenario">
+      <div class="scenario-title">
+      <span class="keyword">Scenario</span>: <span class="title">Scenario title</span>
+      </div>
+      <div class="description">
+        <p>Paragraph 1</p>
+        <p>Paragraph 2</p>
+      </div>
+    """

@@ -14,6 +14,10 @@ assert($feature instanceof FeatureNode);
 <div class="feature">
     <div class="feature-title"><span class="keyword"><?php echo Html::escape($feature->getKeyword()); ?></span>:<?php if (is_string($feature->getTitle())) { ?> <span class="title"><?php echo Html::escape($feature->getTitle()); ?></span><?php } ?></div>
     <?php
+
+    $description = $feature->getDescription();
+    require __DIR__ . '/_description.html.php';
+
     $background = $feature->getBackground();
     if ($background instanceof BackgroundNode && $background->hasSteps()) {
         ?>
@@ -24,7 +28,7 @@ assert($feature instanceof FeatureNode);
             <?php
             $steps = $background->getSteps();
 
-            require __DIR__ . '/_steps.php'
+            require __DIR__ . '/_steps.html.php'
             ?>
         </div>
         <?php

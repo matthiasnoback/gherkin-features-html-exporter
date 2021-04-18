@@ -14,7 +14,7 @@ if ($argument instanceof TableNode) {
     <div class="table-argument">
         <?php
         $table = $argument;
-        require __DIR__ . '/_table.php';
+        require __DIR__ . '/_table.html.php';
         ?>
     </div>
     <?php
