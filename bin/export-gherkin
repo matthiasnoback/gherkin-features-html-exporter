@@ -7,19 +7,11 @@ use Symfony\Component\Console\Application;
 
 $projectRootDir = null;
 
-foreach (array(__DIR__ . '/../../autoload.php', __DIR__ . '/../vendor/autoload.php', __DIR__ . '/vendor/autoload.php') as $autoloadFile) {
-    if (file_exists($autoloadFile)) {
-        $autoloadFile = realpath($autoloadFile);
-        $projectRootDir = dirname(dirname($autoloadFile));
-        require $autoloadFile;
-
-        break;
-    }
-}
-
-if ($projectRootDir === null) {
+$autoloadFile = getcwd() . '/vendor/autoload.php';
+if (!file_exists($autoloadFile)) {
     throw new RuntimeException('Could not find autoload.php');
 }
+require_once $autoloadFile;
 
 $application = new Application('Gherkin features exporter');
 $application->addCommands(
