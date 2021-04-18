@@ -27,11 +27,31 @@ final class ExportFeaturesCommand extends Command
     {
         $exporter = new FeatureExporter(new EchoNotifications());
 
+        $featuresDirectory = $input->getArgument('featuresDirectory');
+        assert(is_string($featuresDirectory));
+        $output->writeln('Features directory: ' . $featuresDirectory);
+
+        $targetDirectory = $input->getArgument('targetDirectory');
+        assert(is_string($targetDirectory));
+        $output->writeln('Target directory: ' . $targetDirectory);
+
+        $tag = $input->getOption('tag');
+        assert($tag === null || is_string($tag));
+        if (is_string($tag)) {
+            $output->writeln('Filter by tag: ' . $tag);
+        }
+
+        $stylesheet = $input->getOption('stylesheet');
+        assert($stylesheet === null || is_string($stylesheet));
+        if (is_string($stylesheet)) {
+            $output->writeln('Applying stylesheet: ' . $stylesheet);
+        }
+
         $exporter->exportDirectory(
-            $input->getArgument('featuresDirectory'),
-            $input->getArgument('targetDirectory'),
-            $input->getOption('tag'),
-            $input->getOption('stylesheet')
+            $featuresDirectory,
+            $targetDirectory,
+            $tag,
+            $stylesheet
         );
 
         return 0;

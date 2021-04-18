@@ -12,6 +12,7 @@ use Behat\Gherkin\Loader\GherkinFileLoader;
 use Behat\Gherkin\Node\FeatureNode;
 use Behat\Gherkin\Parser as GherkinParser;
 use ReflectionClass;
+use SplFileInfo;
 
 final class FeatureExporter
 {
@@ -22,7 +23,10 @@ final class FeatureExporter
     {
         // Copied from \Codeception\Test\Loader\Gherkin
         $gherkin = new ReflectionClass(Gherkin::class);
-        $gherkinClassPath = dirname($gherkin->getFileName());
+        $gherkinClassFileName = $gherkin->getFileName();
+        assert(is_string($gherkinClassFileName));
+
+        $gherkinClassPath = dirname($gherkinClassFileName);
         $i18n = require $gherkinClassPath . '/../../../i18n.php';
         $keywords = new GherkinKeywords($i18n);
         $lexer = new GherkinLexer($keywords);
@@ -61,6 +65,9 @@ final class FeatureExporter
         }
     }
 
+    /**
+     * @param array<string,mixed> $variables
+     */
     private function renderTemplate(string $templatePath, array $variables): string
     {
         ob_start();
@@ -70,11 +77,15 @@ final class FeatureExporter
         require $templatePath;
 
         $html = ob_get_contents();
+        assert(is_string($html));
         ob_end_clean();
 
         return $html;
     }
 
+    /**
+     * @param array<FeatureNode> $features
+     */
     private function exportAllFeaturesToSingleFile(array $features, string $targetDirectory, string $tag, ?string $stylesheet): void
     {
         $html = $this->renderTemplate(
@@ -93,6 +104,9 @@ final class FeatureExporter
         $this->notifications->htmlFileWasCreated($targetFilePath);
     }
 
+    /**
+     * @param array<FeatureNode> $features
+     */
     private function exportAllFeaturesSeparately(array $features, string $targetDirectory, ?string $stylesheet): void
     {
         foreach ($features as $feature) {
@@ -104,7 +118,10 @@ final class FeatureExporter
                 ]
             );
 
-            $sourceFile = new \SplFileInfo($feature->getFile());
+            $featureFile = $feature->getFile();
+            assert(is_string($featureFile));
+
+            $sourceFile = new SplFileInfo($featureFile);
             $fileNameWithoutExtension = $sourceFile->getBasename('.feature');
 
             $targetFilePath = $targetDirectory . '/' . $fileNameWithoutExtension . '.html';

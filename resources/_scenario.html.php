@@ -16,7 +16,7 @@ assert($scenario instanceof ScenarioNode);
     <div class="steps">
         <?php
         foreach ($scenario->getSteps() as $step) {
-            require __DIR__ . '/step.html.php';
+            require __DIR__ . '/_step.html.php';
         }
         ?>
     </div>

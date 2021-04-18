@@ -6,7 +6,8 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
 use GherkinHtmlExporter\FeatureExporter;
 use PHPUnit\Framework\Assert;
-use function preg_replace;
+use function Safe\preg_replace;
+use function Safe\file_get_contents;
 
 final class FeatureContext implements Context
 {
@@ -36,6 +37,8 @@ final class FeatureContext implements Context
         $this->featureDirectory = $this->projectRootDir . '/' . $directory;
         mkdir($this->featureDirectory);
 
+        $contents = str_replace("'''" , '"""', $contents);
+
         file_put_contents($this->featureDirectory . '/' . $file, $contents);
     }
 
@@ -56,6 +59,8 @@ final class FeatureContext implements Context
      */
     public function export(?string $tag = null, ?string $stylesheet = null): void
     {
+        assert(is_string($this->featureDirectory));
+
         $this->exporter->exportDirectory($this->featureDirectory, $this->exportDir, $tag, $stylesheet);
     }
 
@@ -117,7 +122,10 @@ final class FeatureContext implements Context
     private function reformatHtml(string $originalHtml): string
     {
         // A silly, yet effective way of removing whitespace between HTML elements:
-        return trim(preg_replace('/(\>)([\s]+)(\<)/', '$1$3', $originalHtml));
+        $cleanedUpHtml = preg_replace('/(>)([\s]+)(<)/', '$1$3', $originalHtml);
+        assert(is_string($cleanedUpHtml));
+
+        return trim($cleanedUpHtml);
     }
 
     private function assertHtmlFileContains(string $filePath, string $expectedContents): void

@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use Behat\Gherkin\Node\ArgumentInterface;
+use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use GherkinHtmlExporter\Html;
 
@@ -27,6 +28,14 @@ if ($argument instanceof TableNode) {
             ?>
             </tbody>
         </table>
+    </div>
+    <?php
+}
+
+if ($argument instanceof PyStringNode) {
+    ?>
+    <div class="pystring-argument">
+        <pre><?php echo $argument->getRaw(); ?></pre>
     </div>
     <?php
 }

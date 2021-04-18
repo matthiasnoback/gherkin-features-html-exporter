@@ -11,7 +11,7 @@ assert($step instanceof StepNode);
 <div class="step">
     <span class="keyword"><?php echo Html::escape($step->getKeyword()); ?></span> <span class="text"><?php echo Html::escape($step->getText()); ?></span>
     <?php foreach ($step->getArguments() as $argument) {
-        require __DIR__ . '/argument.html.php';
+        require __DIR__ . '/_argument.html.php';
     }
     ?>
 </div>

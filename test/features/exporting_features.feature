@@ -70,6 +70,29 @@ Feature: Exporting features to HTML
     </div>
     """
 
+  Scenario: convert a big string to HTML
+
+    Given the directory "features" has a file called "pystring.feature" containing:
+    """
+    Feature: Feature title
+
+      Scenario: Scenario title
+        Given step:
+          '''
+          Large string
+          '''
+    """
+    When I export this directory to HTML
+    Then the export directory should have a file called "pystring.html" containing:
+    """
+    <div class="step">
+      <span class="keyword">Given</span> <span class="text">step:</span>
+      <div class="pystring-argument">
+        <pre>Large string</pre>
+      </div>
+    </div>
+    """
+
   Scenario: combine multiple features by tag in a single file
     Given the directory "features" has a file called "interesting_1.feature" containing:
     """
