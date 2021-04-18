@@ -24,6 +24,6 @@
         }
     },
     "bin": [
-        "bin/export.php"
+        "bin/export-gherkin"
     ]
 }
