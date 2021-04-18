@@ -246,7 +246,8 @@ Feature: Exporting features to HTML
       """
       Feature:
 
-        Paragraph 1
+        Multi-line
+        paragraph 1
 
         Paragraph 2
       """
@@ -256,7 +257,8 @@ Feature: Exporting features to HTML
     <div class="feature">
       <div class="feature-title"><span class="keyword">Feature</span>:</div>
       <div class="description">
-        <p>Paragraph 1</p>
+        <p>Multi-line
+    paragraph 1</p>
         <p>Paragraph 2</p>
       </div>
     """
@@ -269,7 +271,8 @@ Feature: Exporting features to HTML
 
         Scenario: Scenario title
 
-          Paragraph 1
+          Multi-line
+          paragraph 1
 
           Paragraph 2
       """
@@ -281,7 +284,35 @@ Feature: Exporting features to HTML
       <span class="keyword">Scenario</span>: <span class="title">Scenario title</span>
       </div>
       <div class="description">
-        <p>Paragraph 1</p>
+        <p>Multi-line
+    paragraph 1</p>
+        <p>Paragraph 2</p>
+      </div>
+    """
+
+  Scenario: the background description will be parsed as Markdown
+
+    Given the directory "features" has a file called "background_description.feature" containing:
+      """
+      Feature:
+
+        Background: Background title
+
+          Multi-line
+          paragraph 1
+
+          Paragraph 2
+      """
+    When I export this directory to HTML
+    Then the export directory should have a file called "background_description.html" containing:
+    """
+    <div class="background">
+      <div class="background-title">
+        <span class="keyword">Background</span>: <span class="title">Background title</span>
+      </div>
+      <div class="description">
+        <p>Multi-line
+    paragraph 1</p>
         <p>Paragraph 2</p>
       </div>
     """
