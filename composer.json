@@ -2,6 +2,7 @@
     "name": "matthiasnoback/gherkin-features-html-exporter",
     "description": "A tool for exporting Gherkin features to HTML",
     "require": {
+        "php": ">=7.4",
         "behat/gherkin": "^4.8",
         "symfony/console": "^5.2",
         "thecodingmachine/safe": "^1.3",
