@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Feature title</title>
+<style>body {
+    margin: 1em;
+    font-family: "DejaVu Serif", "Times", serif;
+    font-size: 16px;
+    line-height: 1.6em;
+}
+
+.keyword {
+    color: #0077c3;
+}
+
+.step > .keyword {
+    display: inline-block;
+    text-align: right;
+    width: 4em;
+}
+
+.background, .feature, .scenario {
+    padding: 1em 0;
+    margin: 1em 0;
+}
+
+.background, .scenario, .description, .steps {
+    margin-left: 1em;
+}
+
+.feature-title, .scenario-title, .background-title {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+
+.feature, .scenario {
+    border-top: 1px solid #ccc;
+}
+
+.description {
+    max-width: 47em;
+}
+
+.table-argument, .pystring-argument {
+    margin: 1em 0 1em 2em;
+}
+
+table {
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+}
+table td {
+    border: 1px solid #ccc;
+    padding: 0.3em 0.7em;
+}
+</style>
+    </head>
+<body>
+<div class="feature">
+    <div class="feature-title"><span class="keyword">Feature</span>: <span class="title">Feature title</span></div>
+        <div class="description">
+        <p>Nullam quam nisl, accumsan non egestas vel, lacinia eu ligula. Sed eu metus lobortis, blandit ligula vitae, sagittis
+leo. Sed rutrum erat vel tellus vehicula, sagittis auctor sem gravida.</p>
+<p>Etiam facilisis, augue non molestie feugiat, massa arcu blandit augue, at tempus nunc sem eu est. Sed tempor urna
+vitae lacus sagittis, pretium ultrices odio aliquam.</p>
+    </div>
+            <div class="background">
+            <div class="background-title">
+                <span class="keyword">Background</span>: <span class="title">The background</span>            </div>
+                <div class="description">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum a arcu nisi. Proin scelerisque tortor tellus, sit
+amet interdum risus dapibus non. Ut ornare sollicitudin ligula. Nam urna arcu, suscipit nec facilisis eget, fermentum
+ac orci.</p>
+<p>Mauris sit amet mauris lacinia, mollis tellus sit amet, egestas felis.</p>
+    </div>
+        <div class="steps">
+        <div class="step">
+    <span class="keyword">Given</span> <span class="text">finibus enim eu dolor tristique, ut molestie nunc porta</span>
+    </div>
+<div class="step">
+    <span class="keyword">When</span> <span class="text">neque eros, suscipit vel justo</span>
+    </div>
+<div class="step">
+    <span class="keyword">Then</span> <span class="text">libero diam ornare lacus, quis vulputate nunc risus ac urna</span>
+    </div>
+    </div>
+            </div>
+            <div class="scenario">
+    <div class="scenario-title">
+        <span class="keyword">Scenario</span>: <span class="title">Scenario title</span>    </div>
+        <div class="description">
+        <p>Donec vehicula finibus lorem, suscipit vulputate lacus sollicitudin ac. Maecenas quis enim id enim euismod dapibus.
+Proin molestie, massa vel convallis bibendum, libero diam ornare lacus, quis vulputate nunc risus ac urna.</p>
+<p>Curabitur congue augue id rutrum ullamcorper. Fusce finibus enim eu dolor tristique, ut molestie nunc porta. Integer
+sed massa nec lectus fermentum accumsan.</p>
+    </div>
+        <div class="steps">
+        <div class="step">
+    <span class="keyword">Given</span> <span class="text">vehicula finibus lorem, suscipit vulputate lacus</span>
+        <div class="table-argument">
+        <table>
+    <tbody>
+            <tr>
+                            <td>Row 1 column 1</td>                <td>Row 1 column 2</td>        </tr>
+                <tr>
+                            <td>Row 2 column 1</td>                <td>Row 2 column 2</td>        </tr>
+            </tbody>
+</table>
+    </div>
+    </div>
+<div class="step">
+    <span class="keyword">When</span> <span class="text">finibus enim eu dolor tristique, ut molestie nunc porta</span>
+        <div class="pystring-argument">
+        <pre>{
+  "foo": "bar",
+  "bar": "baz"
+}</pre>
+    </div>
+    </div>
+<div class="step">
+    <span class="keyword">Then</span> <span class="text">sed massa nec lectus fermentum accumsan</span>
+    </div>
+    </div>
+    </div>
+<div class="scenario scenario-outline">
+    <div class="scenario-title">
+        <span class="keyword">Scenario Outline</span>
+        <span class="title">Scenario outline title</span>    </div>
+        <div class="steps">
+        <div class="step">
+    <span class="keyword">Given</span> <span class="text">elementum nunc a augue vehicula, eu hendrerit velit scelerisque</span>
+    </div>
+<div class="step">
+    <span class="keyword">And</span> <span class="text">imperdiet, purus sed sagittis aliquet, neque orci facilisis mauris, ut laoreet</span>
+    </div>
+<div class="step">
+    <span class="keyword">Then</span> <span class="text">vehicula dui commodo, aliquam orci et, auctor libero</span>
+    </div>
+    </div>
+    <div class="examples">
+                    <div class="example-table">
+                <table>
+    <tbody>
+            <tr>
+                            <td>Value 1</td>                <td>Value 2</td>        </tr>
+                <tr>
+                            <td>abc</td>                <td>123</td>        </tr>
+                <tr>
+                            <td>def</td>                <td>456</td>        </tr>
+            </tbody>
+</table>
+            </div>
+                </div>
+</div>
+</div>
+</body>
+</html>
