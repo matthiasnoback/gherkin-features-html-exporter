@@ -15,16 +15,16 @@ body {
     width: 4em;
 }
 
-.background, .feature, .scenario {
+.background, .feature, .scenario, .examples {
     padding: 1em 0;
     margin: 1em 0;
 }
 
-.background, .scenario, .description, .steps {
+.background, .scenario, .description, .steps, .examples {
     margin-left: 1em;
 }
 
-.feature-title, .scenario-title, .background-title {
+.feature-title, .scenario-title, .background-title, .examples-title {
     font-size: 1.1em;
     font-weight: bold;
     margin-bottom: 1em;
@@ -38,7 +38,7 @@ body {
     max-width: 47em;
 }
 
-.table-argument, .pystring-argument {
+.table-argument, .pystring-argument, .example-table {
     margin: 1em 0 1em 2em;
 }
 

@@ -31,6 +31,7 @@ $titleAndDescription = TitleAndDescription::fromScenarioTitle($scenario->getTitl
         ?>
     </div>
     <div class="examples">
+        <div class="examples-title"><span class="keyword">Examples</span>:</div>
         <?php
         foreach ($scenario->getExampleTables() as $table) {
             ?>

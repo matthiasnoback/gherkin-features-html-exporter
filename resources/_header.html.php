@@ -14,7 +14,7 @@ use GherkinHtmlExporter\Html;
     <title><?php echo Html::escape($title); ?></title>
 <?php if (is_string($stylesheet)) {
     ?>
-<style><?php require $stylesheet; ?></style>
+<link rel="stylesheet" href="<?php echo $stylesheet; ?>">
     <?php
 }
 ?>

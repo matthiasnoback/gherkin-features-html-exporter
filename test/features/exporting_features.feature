@@ -150,6 +150,7 @@ Feature: Exporting features to HTML
         </div>
       </div>
       <div class="examples">
+        <div class="examples-title"><span class="keyword">Examples</span>:</div>
         <div class="example-table">
           <table>
             <tbody>
@@ -216,10 +217,6 @@ Feature: Exporting features to HTML
       Scenario:
         Given step
     """
-    And this directory has a file called "style.css" containing:
-    """
-    .feature-title { font-size: 2em; }
-    """
     When I export this directory to HTML providing the tag "interesting" and the stylesheet "style.css"
     Then the export directory should have a file called "interesting.html" containing:
     """
@@ -228,7 +225,7 @@ Feature: Exporting features to HTML
     <head>
       <meta charset="UTF-8">
       <title>interesting features</title>
-      <style>.feature-title { font-size: 2em; }</style>
+      <link rel="stylesheet" href="style.css">
     </head>
     <body>
       <div class="feature">

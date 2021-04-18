@@ -35,7 +35,7 @@ final class FeatureExporter
         $this->notifications = $notifications;
     }
 
-    public function exportDirectory(string $featuresDirectory, string $targetDirectory, ?string $tag, ?string $relativeStylesheetPathName): void
+    public function exportDirectory(string $featuresDirectory, string $targetDirectory, ?string $tag, ?string $stylesheet): void
     {
         if (!is_dir($targetDirectory)) {
             mkdir($targetDirectory, 0777, true);
@@ -50,18 +50,10 @@ final class FeatureExporter
         /** @var FeatureNode[] $features */
         $features = $gherkin->load($featuresDirectory);
 
-        $stylesheetFilePath = null;
-        if (is_string($relativeStylesheetPathName)) {
-            $stylesheetFilePath = $featuresDirectory . '/' . $relativeStylesheetPathName;
-            if (!is_file($stylesheetFilePath)) {
-                $stylesheetFilePath = null;
-            }
-        }
-
         if (is_string($tag)) {
-            $this->exportAllFeaturesToSingleFile($features, $targetDirectory, $tag, $stylesheetFilePath);
+            $this->exportAllFeaturesToSingleFile($features, $targetDirectory, $tag, $stylesheet);
         } else {
-            $this->exportAllFeaturesSeparately($features, $targetDirectory, $stylesheetFilePath);
+            $this->exportAllFeaturesSeparately($features, $targetDirectory, $stylesheet);
         }
     }
 
