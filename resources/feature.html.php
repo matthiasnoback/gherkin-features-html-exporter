@@ -5,7 +5,7 @@ use Behat\Gherkin\Node\FeatureNode;
 
 /** @var FeatureNode $feature */
 
-$title = $feature->getTitle();
+$title = $feature->getTitle() ?? '';
 
 require __DIR__  . '/_header.html.php';
 

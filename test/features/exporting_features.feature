@@ -15,12 +15,10 @@ Feature: Exporting features to HTML
     Then the export directory should have a file called "example.html" containing:
     """
     <div class="feature">
-      <div class="feature-title">
-        <span class="keyword">Feature</span>: <span class="title">Feature title</span>
-      </div>
+      <div class="feature-title"><span class="keyword">Feature</span>: <span class="title">Feature title</span></div>
       <div class="scenario">
         <div class="scenario-title">
-          <span class="keyword">Scenario</span> <span class="title">Scenario title</span>
+          <span class="keyword">Scenario</span>: <span class="title">Scenario title</span>
         </div>
         <div class="steps">
           <div class="step">
@@ -35,6 +33,38 @@ Feature: Exporting features to HTML
         </div>
       </div>
     </div>
+    """
+
+  Scenario: export the scenario background
+
+    Given the directory "features" has a file called "background.feature" containing:
+    """
+    Feature:
+
+      Background: The background
+        Given step
+
+      Scenario:
+        Given step
+    """
+    When I export this directory to HTML
+    Then the export directory should have a file called "background.html" containing:
+    """
+    <div class="feature">
+      <div class="feature-title"><span class="keyword">Feature</span>:</div>
+      <div class="background">
+        <div class="background-title">
+          <span class="keyword">Background</span>: <span class="title">The background</span>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <span class="keyword">Given</span> <span class="text">step</span>
+          </div>
+        </div>
+      </div>
+      <div class="scenario">
+        <div class="scenario-title">
+          <span class="keyword">Scenario</span>:
     """
 
   Scenario: convert a table to HTML
@@ -168,16 +198,12 @@ Feature: Exporting features to HTML
     Then the export directory should have a file called "interesting.html" containing:
     """
     <div class="feature">
-      <div class="feature-title">
-        <span class="keyword">Feature</span>: <span class="title">to be included 1</span>
-      </div>
+      <div class="feature-title"><span class="keyword">Feature</span>: <span class="title">to be included 1</span></div>
     """
     And this file should also contain:
     """
     <div class="feature">
-      <div class="feature-title">
-        <span class="keyword">Feature</span>: <span class="title">to be included 2</span>
-      </div>
+      <div class="feature-title"><span class="keyword">Feature</span>: <span class="title">to be included 2</span></div>
     """
     And the file "interesting.html" should not contain "irrelevant"
 

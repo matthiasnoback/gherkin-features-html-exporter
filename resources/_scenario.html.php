@@ -10,14 +10,10 @@ assert($scenario instanceof ScenarioNode);
 ?>
 <div class="scenario">
     <div class="scenario-title">
-        <span class="keyword"><?php echo Html::escape($scenario->getKeyword()); ?></span>
-        <?php if ($scenario->getTitle() !== null) { ?><span class="title"><?php echo Html::escape($scenario->getTitle()); ?></span><?php } ?>
+        <span class="keyword"><?php echo Html::escape($scenario->getKeyword()); ?></span>: <?php if ($scenario->getTitle() !== null) { ?><span class="title"><?php echo Html::escape($scenario->getTitle()); ?></span><?php } ?>
     </div>
-    <div class="steps">
-        <?php
-        foreach ($scenario->getSteps() as $step) {
-            require __DIR__ . '/_step.html.php';
-        }
-        ?>
-    </div>
+    <?php
+    $steps = $scenario->getSteps();
+    require __DIR__ . '/_steps.php';
+    ?>
 </div>
