@@ -55,6 +55,8 @@ final class FeatureExporter
         } else {
             $this->exportAllFeaturesSeparately($features, $targetDirectory, $stylesheet);
         }
+
+        $this->notifications->done();
     }
 
     /**
@@ -112,7 +114,6 @@ final class FeatureExporter
 
             $featureFile = $feature->getFile();
             assert(is_string($featureFile));
-
             $sourceFile = new SplFileInfo($featureFile);
             $fileNameWithoutExtension = $sourceFile->getBasename('.feature');
 

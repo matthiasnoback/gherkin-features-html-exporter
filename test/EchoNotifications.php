@@ -16,4 +16,8 @@ final class EchoNotifications implements Notifications
     {
         echo $line . "\n";
     }
+
+    public function done(): void
+    {
+    }
 }

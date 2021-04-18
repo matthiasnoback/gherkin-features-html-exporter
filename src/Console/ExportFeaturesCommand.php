@@ -25,26 +25,26 @@ final class ExportFeaturesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $exporter = new FeatureExporter(new EchoNotifications());
+        $exporter = new FeatureExporter(new ConsoleNotifications($output));
 
         $featuresDirectory = $input->getArgument('featuresDirectory');
         assert(is_string($featuresDirectory));
-        $output->writeln('Features directory: ' . $featuresDirectory);
+        $output->writeln(sprintf('Features directory: <comment>%s</comment>', $featuresDirectory));
 
         $targetDirectory = $input->getArgument('targetDirectory');
         assert(is_string($targetDirectory));
-        $output->writeln('Target directory: ' . $targetDirectory);
+        $output->writeln(sprintf('Target directory: <comment>%s</comment>', $targetDirectory));
 
         $tag = $input->getOption('tag');
         assert($tag === null || is_string($tag));
         if (is_string($tag)) {
-            $output->writeln('Filter by tag: ' . $tag);
+            $output->writeln(sprintf('Filter by tag: <comment>%s</comment>', $tag));
         }
 
         $stylesheet = $input->getOption('stylesheet');
         assert($stylesheet === null || is_string($stylesheet));
         if (is_string($stylesheet)) {
-            $output->writeln('Applying stylesheet: ' . $stylesheet);
+            $output->writeln(sprintf('Applying stylesheet: <comment>%s</comment>', $stylesheet));
         }
 
         $exporter->exportDirectory(

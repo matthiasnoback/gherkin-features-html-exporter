@@ -6,4 +6,6 @@ namespace GherkinHtmlExporter;
 interface Notifications
 {
     public function htmlFileWasCreated(string $filePath): void;
+
+    public function done(): void;
 }
