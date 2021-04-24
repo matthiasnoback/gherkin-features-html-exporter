@@ -8,8 +8,14 @@ use GherkinHtmlExporter\HtmlPrinter;
 
 final class ExamplesHtmlNode implements HtmlNode
 {
+    /**
+     * @var array<ExampleTableNode> $exampleTables
+     */
     private array $exampleTables;
 
+    /**
+     * @param array<ExampleTableNode> $exampleTables
+     */
     public function __construct(array $exampleTables)
     {
         $this->exampleTables = $exampleTables;

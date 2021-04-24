@@ -9,8 +9,15 @@ use function strtr;
 final class ReplaceVariablesNode implements HtmlNode
 {
     private string $template;
+
+    /**
+     * @var array<string,string>
+     */
     private array $variables;
 
+    /**
+     * @param array<string,string> $variables
+     */
     public function __construct(string $template, array $variables)
     {
         $this->template = $template;

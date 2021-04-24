@@ -16,6 +16,13 @@ final class FeatureHtmlNode implements HtmlNode
         $this->feature = $feature;
     }
 
+    public static function determineUniqueAnchorForFeature(FeatureNode $feature): string
+    {
+        assert(is_string($feature->getFile()));
+
+        return md5(basename($feature->getFile()) . $feature->getLine());
+    }
+
     public function toHtml(HtmlPrinter $htmlPrinter): string
     {
         return $htmlPrinter->nodesToHtml(
@@ -23,7 +30,7 @@ final class FeatureHtmlNode implements HtmlNode
                 new ReplaceVariablesNode(
                     '<a id="{anchor}"></a>',
                     [
-                        'anchor' => md5(basename($this->feature->getFile()) . $this->feature->getLine()),
+                        'anchor' => self::determineUniqueAnchorForFeature($this->feature),
                     ]
                 ),
                 '<div class="feature">',

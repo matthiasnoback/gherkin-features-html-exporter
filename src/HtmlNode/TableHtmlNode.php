@@ -17,26 +17,24 @@ final class TableHtmlNode implements HtmlNode
 
     public function toHtml(HtmlPrinter $htmlPrinter): string
     {
-        return $htmlPrinter->nodesToHtml(
-            [
-                '<table><tbody>',
-                array_map(
-                    fn(array $row) => [
-                        '<tr>',
-                        array_map(
-                            fn($cell) => [
-                                '<td>',
-                                $htmlPrinter->escape($cell),
-                                '</td>',
-                            ],
-                            $row
-                        ),
-                        '</tr>'
-                    ],
-                    $this->table->getRows()
-                ),
-                '</tbody></table>'
-            ]
-        );
+        $nodes = ['<table><tbody>'];
+
+        foreach ($this->table->getRows() as $row) {
+            $nodes[] = '<tr>';
+
+            foreach ($row as $cell) {
+                $nodes[] = new ReplaceVariablesNode(
+                    '<td>{cell}</td>',
+                    [
+                        'cell' => $cell
+                    ]
+                );
+            }
+            $nodes[] = '</tr>';
+        }
+
+        $nodes[] = '</tbody></table>';
+
+        return $htmlPrinter->nodesToHtml($nodes);
     }
 }

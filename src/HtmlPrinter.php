@@ -21,7 +21,7 @@ final class HtmlPrinter
     }
 
     /**
-     * @param array<HtmlNode|string|array<HtmlNode|string>> $nodes
+     * @param array<HtmlNode|string|null|array<HtmlNode|string|null>> $nodes
      */
     public function nodesToHtml(array $nodes): string
     {

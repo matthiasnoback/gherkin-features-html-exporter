@@ -31,17 +31,14 @@ final class TableOfContentsHtmlNode implements HtmlNode
             [
                 '<div class="table-of-contents"><div class="title">Table of contents</div><ul>',
                 array_map(
-                    fn(FeatureNode $feature) => [
-                        '<li>',
-                        new ReplaceVariablesNode(
-                            '<a href="#{anchor}">{title}</a>',
-                            [
-                                'anchor' => md5(basename($feature->getFile()) . $feature->getLine()),
-                                'title' => ucfirst($feature->getTitle() ?? 'Feature')
-                            ]
-                        ),
-                        '</li>',
-                    ],
+                    fn(FeatureNode $feature) => new ReplaceVariablesNode(
+                        '<li><a href="#{anchor}">{title}</a></li>',
+                        [
+                            'anchor' => FeatureHtmlNode::determineUniqueAnchorForFeature($feature),
+                            'title' => ucfirst($feature->getTitle() ?? 'Feature')
+                        ]
+                    )
+                    ,
                     $this->features
                 ),
                 '</ul></div>'

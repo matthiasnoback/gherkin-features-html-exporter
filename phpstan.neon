@@ -1,5 +1,8 @@
 parameters:
-	level: max
-	paths:
-		- src
-		- test
+    level: max
+    paths:
+        - src
+        - test
+    ignoreErrors:
+        - '#with no value type specified in iterable type Behat\\Gherkin\\Node\\TableNode#'
+        - '#has no value type specified in iterable type Behat\\Gherkin\\Node\\TableNode#'
