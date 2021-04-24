@@ -11,10 +11,12 @@ use Behat\Gherkin\Loader\DirectoryLoader;
 use Behat\Gherkin\Loader\GherkinFileLoader;
 use Behat\Gherkin\Node\FeatureNode;
 use Behat\Gherkin\Parser as GherkinParser;
+use GherkinHtmlExporter\Console\ConsoleNotifications;
 use GherkinHtmlExporter\HtmlNode\LayoutHtmlNode;
 use League\CommonMark\CommonMarkConverter;
 use ReflectionClass;
 use SplFileInfo;
+use Symfony\Component\Console\Output\OutputInterface;
 
 final class FeatureExporter
 {
@@ -22,7 +24,7 @@ final class FeatureExporter
     private Notifications $notifications;
     private HtmlPrinter $htmlPrinter;
 
-    public static function createWithDependencies(Notifications $notifications): self
+    public static function createWithDependencies(?OutputInterface $outputInterface = null): self
     {
         // Copied from \Codeception\Test\Loader\Gherkin
         $gherkin = new ReflectionClass(Gherkin::class);
@@ -40,7 +42,7 @@ final class FeatureExporter
             new HtmlPrinter(
                 new CommonMarkConverter()
             ),
-            $notifications
+            new ConsoleNotifications($outputInterface)
         );
     }
 

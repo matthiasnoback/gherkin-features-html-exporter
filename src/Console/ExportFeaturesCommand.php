@@ -24,7 +24,7 @@ final class ExportFeaturesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $exporter = FeatureExporter::createWithDependencies(new ConsoleNotifications($output));
+        $exporter = FeatureExporter::createWithDependencies($output);
 
         $featuresDirectory = $input->getArgument('featuresDirectory');
         assert(is_string($featuresDirectory));
