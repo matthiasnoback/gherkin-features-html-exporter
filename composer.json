@@ -1,6 +1,13 @@
 {
     "name": "matthiasnoback/gherkin-features-html-exporter",
     "description": "A tool for exporting Gherkin features to HTML",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matthias Noback",
+            "email": "matthiasnoback@gmail.com"
+        }
+    ],
     "require": {
         "php": ">=7.4",
         "behat/gherkin": "^4.8",
