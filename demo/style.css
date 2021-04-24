@@ -15,16 +15,16 @@ body {
     width: 4em;
 }
 
-.background, .feature, .scenario, .examples {
+.feature, .scenario, .examples {
     padding: 1em 0;
     margin: 1em 0;
 }
 
-.background, .scenario, .description, .steps, .examples {
+.scenario, .description, .steps, .examples {
     margin-left: 1em;
 }
 
-.feature-title, .scenario-title, .background-title, .examples-title {
+.title {
     font-size: 1.1em;
     font-weight: bold;
     margin-bottom: 1em;

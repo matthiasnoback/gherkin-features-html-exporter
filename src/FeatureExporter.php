@@ -35,8 +35,12 @@ final class FeatureExporter
         $this->notifications = $notifications;
     }
 
-    public function exportDirectory(string $featuresDirectory, string $targetDirectory, ?string $tag, ?string $stylesheet): void
-    {
+    public function exportDirectory(
+        string $featuresDirectory,
+        string $targetDirectory,
+        ?string $tag,
+        ?string $stylesheet
+    ): void {
         if (!is_dir($targetDirectory)) {
             mkdir($targetDirectory, 0777, true);
         }
@@ -60,35 +64,20 @@ final class FeatureExporter
     }
 
     /**
-     * @param array<string,mixed> $variables
-     */
-    private function renderTemplate(string $templatePath, array $variables): string
-    {
-        ob_start();
-
-        extract($variables);
-
-        require $templatePath;
-
-        $html = ob_get_contents();
-        assert(is_string($html));
-        ob_end_clean();
-
-        return $html;
-    }
-
-    /**
      * @param array<FeatureNode> $features
      */
-    private function exportAllFeaturesToSingleFile(array $features, string $targetDirectory, string $tag, ?string $stylesheet): void
-    {
-        $html = $this->renderTemplate(
-            __DIR__ . '/../resources/features.html.php',
-            [
-                'features' => $features,
-                'stylesheet' => $stylesheet,
-                'tag' => $tag
-            ]
+    private function exportAllFeaturesToSingleFile(
+        array $features,
+        string $targetDirectory,
+        string $tag,
+        ?string $stylesheet
+    ): void {
+        $html = (new HtmlPrinter())->nodeToHtml(
+            new LayoutHtmlNode(
+                $features,
+                $stylesheet,
+                $tag . ' features'
+            )
         );
 
         $targetFilePath = $targetDirectory . '/' . $tag . '.html';
@@ -104,12 +93,12 @@ final class FeatureExporter
     private function exportAllFeaturesSeparately(array $features, string $targetDirectory, ?string $stylesheet): void
     {
         foreach ($features as $feature) {
-            $html = $this->renderTemplate(
-                __DIR__ . '/../resources/feature.html.php',
-                [
-                    'feature' => $feature,
-                    'stylesheet' => $stylesheet
-                ]
+            $html = (new HtmlPrinter())->nodeToHtml(
+                new LayoutHtmlNode(
+                    [$feature],
+                    $stylesheet,
+                    $feature->getTitle() ?? 'Feature'
+                )
             );
 
             $featureFile = $feature->getFile();

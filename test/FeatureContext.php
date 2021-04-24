@@ -128,7 +128,7 @@ final class FeatureContext implements Context
     private function reformatHtml(string $originalHtml): string
     {
         // A silly, yet effective way of removing whitespace between HTML elements:
-        $cleanedUpHtml = preg_replace('/(>)([\s]+)(<)/', "$1\n$3", $originalHtml);
+        $cleanedUpHtml = preg_replace('/(>)([\s]*)(<)/', "$1\n$3", $originalHtml);
         assert(is_string($cleanedUpHtml));
 
         return trim($cleanedUpHtml);

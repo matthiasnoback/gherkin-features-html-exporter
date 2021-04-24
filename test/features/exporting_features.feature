@@ -15,21 +15,13 @@ Feature: Exporting features to HTML
     Then the export directory should have a file called "example.html" containing:
     """
     <div class="feature">
-      <div class="feature-title"><span class="keyword">Feature</span>: <span class="title">Feature title</span></div>
+      <div class="title"><span class="keyword">Feature</span>: Feature title</div>
       <div class="scenario">
-        <div class="scenario-title">
-          <span class="keyword">Scenario</span>: <span class="title">Scenario title</span>
-        </div>
+        <div class="title"><span class="keyword">Scenario</span>: Scenario title</div>
         <div class="steps">
-          <div class="step">
-            <span class="keyword">Given</span> <span class="text">step</span>
-          </div>
-          <div class="step">
-            <span class="keyword">When</span> <span class="text">step</span>
-          </div>
-          <div class="step">
-            <span class="keyword">Then</span> <span class="text">step</span>
-          </div>
+          <div class="step"><span class="keyword">Given</span> step</div>
+          <div class="step"><span class="keyword">When</span> step</div>
+          <div class="step"><span class="keyword">Then</span> step</div>
         </div>
       </div>
     </div>
@@ -51,20 +43,14 @@ Feature: Exporting features to HTML
     Then the export directory should have a file called "background.html" containing:
     """
     <div class="feature">
-      <div class="feature-title"><span class="keyword">Feature</span>:</div>
-      <div class="background">
-        <div class="background-title">
-          <span class="keyword">Background</span>: <span class="title">The background</span>
-        </div>
+      <div class="title"><span class="keyword">Feature</span>:</div>
+      <div class="scenario background">
+        <div class="title"><span class="keyword">Background</span>: The background</div>
         <div class="steps">
-          <div class="step">
-            <span class="keyword">Given</span> <span class="text">step</span>
-          </div>
+          <div class="step"><span class="keyword">Given</span> step</div>
         </div>
       </div>
       <div class="scenario">
-        <div class="scenario-title">
-          <span class="keyword">Scenario</span>:
     """
 
   Scenario: convert a table to HTML
@@ -81,9 +67,7 @@ Feature: Exporting features to HTML
     When I export this directory to HTML
     Then the export directory should have a file called "table.html" containing:
     """
-    <div class="step">
-      <span class="keyword">Given</span> <span class="text">step:</span>
-      <div class="table-argument">
+    <div class="step"><span class="keyword">Given</span> step:<div class="table-argument">
         <table>
           <tbody>
           <tr>
@@ -116,8 +100,7 @@ Feature: Exporting features to HTML
     Then the export directory should have a file called "pystring.html" containing:
     """
     <div class="step">
-      <span class="keyword">Given</span> <span class="text">step:</span>
-      <div class="pystring-argument">
+      <span class="keyword">Given</span> step:<div class="pystring-argument">
         <pre>Large string</pre>
       </div>
     </div>
@@ -140,17 +123,13 @@ Feature: Exporting features to HTML
     When I export this directory to HTML
     Then the export directory should have a file called "scenario_outline.html" containing:
     """
-    <div class="scenario scenario-outline">
-      <div class="scenario-title">
-        <span class="keyword">Scenario Outline</span>
-      </div>
+    <div class="scenario outline">
+      <div class="title"><span class="keyword">Scenario Outline</span>:</div>
       <div class="steps">
-        <div class="step">
-          <span class="keyword">Given</span> <span class="text">step: &lt;Value&gt;</span>
-        </div>
+        <div class="step"><span class="keyword">Given</span> step: &lt;Value&gt;</div>
       </div>
       <div class="examples">
-        <div class="examples-title"><span class="keyword">Examples</span>:</div>
+        <div class="title"><span class="keyword">Examples</span>:</div>
         <div class="example-table">
           <table>
             <tbody>
@@ -198,13 +177,11 @@ Feature: Exporting features to HTML
     When I export this directory to HTML providing the tag "interesting"
     Then the export directory should have a file called "interesting.html" containing:
     """
-    <div class="feature">
-      <div class="feature-title"><span class="keyword">Feature</span>: <span class="title">to be included 1</span></div>
+    to be included 1
     """
     And this file should also contain:
     """
-    <div class="feature">
-      <div class="feature-title"><span class="keyword">Feature</span>: <span class="title">to be included 2</span></div>
+    to be included 2
     """
     And the file "interesting.html" should not contain "irrelevant"
 
@@ -228,7 +205,7 @@ Feature: Exporting features to HTML
     Then the export directory should have a file called "interesting.html" containing:
     """
     <div class="table-of-contents">
-      <div class="table-of-contents-title">Table of contents</div>
+      <div class="title">Table of contents</div>
       <ul>
         <li>
           <a href="#d20dbc93b3f8be5f9c91b02de0b38a27">To be included 1</a>
@@ -243,13 +220,13 @@ Feature: Exporting features to HTML
     """
     <a id="d20dbc93b3f8be5f9c91b02de0b38a27"></a>
     <div class="feature">
-      <div class="feature-title"><span class="keyword">Feature</span>: <span class="title">to be included 1</span></div>
+      <div class="title"><span class="keyword">Feature</span>: to be included 1</div>
     """
     And this file should also contain:
     """
     <a id="3b2192aa16c02b0fe12de7b002f80eef"></a>
     <div class="feature">
-      <div class="feature-title"><span class="keyword">Feature</span>: <span class="title">to be included 2</span></div>
+      <div class="title"><span class="keyword">Feature</span>: to be included 2</div>
     """
 
   Scenario: wrap everything in a layout, add a title, and include the CSS
@@ -293,13 +270,11 @@ Feature: Exporting features to HTML
     When I export this directory to HTML
     Then the export directory should have a file called "feature_description.html" containing:
     """
-    <div class="feature">
-      <div class="feature-title"><span class="keyword">Feature</span>:</div>
-      <div class="description">
-        <p>Multi-line
-    paragraph 1</p>
-        <p>Paragraph 2</p>
-      </div>
+    <div class="description">
+      <p>Multi-line
+  paragraph 1</p>
+      <p>Paragraph 2</p>
+    </div>
     """
 
   Scenario: the scenario description will be parsed as Markdown
@@ -318,15 +293,11 @@ Feature: Exporting features to HTML
     When I export this directory to HTML
     Then the export directory should have a file called "scenario_description.html" containing:
     """
-    <div class="scenario">
-      <div class="scenario-title">
-      <span class="keyword">Scenario</span>: <span class="title">Scenario title</span>
-      </div>
-      <div class="description">
-        <p>Multi-line
-    paragraph 1</p>
-        <p>Paragraph 2</p>
-      </div>
+    <div class="description">
+      <p>Multi-line
+  paragraph 1</p>
+      <p>Paragraph 2</p>
+    </div>
     """
 
   Scenario: the background description will be parsed as Markdown
@@ -345,13 +316,9 @@ Feature: Exporting features to HTML
     When I export this directory to HTML
     Then the export directory should have a file called "background_description.html" containing:
     """
-    <div class="background">
-      <div class="background-title">
-        <span class="keyword">Background</span>: <span class="title">Background title</span>
-      </div>
-      <div class="description">
-        <p>Multi-line
-    paragraph 1</p>
-        <p>Paragraph 2</p>
-      </div>
+    <div class="description">
+      <p>Multi-line
+  paragraph 1</p>
+      <p>Paragraph 2</p>
+    </div>
     """
