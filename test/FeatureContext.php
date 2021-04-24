@@ -60,7 +60,7 @@ final class FeatureContext implements Context
     {
         assert(is_string($this->featureDirectory));
 
-        $this->exporter->exportDirectory($this->featureDirectory, $this->exportDir, $tag, $stylesheet);
+        $this->exporter->exportDirectory($this->featureDirectory, $this->exportDir, $tag, $stylesheet, false);
     }
 
     /**

@@ -9,6 +9,10 @@ body {
     color: #0077c3;
 }
 
+a {
+    color: #4d4d4d;
+}
+
 .step > .keyword {
     display: inline-block;
     text-align: right;

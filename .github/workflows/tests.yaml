@@ -18,6 +18,9 @@ jobs:
                     -
                         name: "Behat"
                         run: vendor/bin/behat
+                    -
+                        name: "Demo"
+                        run:  bin/export-gherkin demo demo -s style.css
                 php-versions: ['7.4']
 
         name: ${{ matrix.actions.name }}

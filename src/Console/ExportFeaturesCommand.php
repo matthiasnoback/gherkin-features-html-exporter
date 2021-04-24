@@ -19,7 +19,8 @@ final class ExportFeaturesCommand extends Command
             ->addArgument('featuresDirectory', InputArgument::REQUIRED)
             ->addArgument('targetDirectory', InputArgument::REQUIRED)
             ->addOption('tag', 't', InputOption::VALUE_REQUIRED)
-            ->addOption('stylesheet', 's', InputOption::VALUE_REQUIRED);
+            ->addOption('stylesheet', 's', InputOption::VALUE_REQUIRED)
+            ->addOption('reformat', 'r', InputOption::VALUE_NONE);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -46,11 +47,15 @@ final class ExportFeaturesCommand extends Command
             $output->writeln(sprintf('Applying stylesheet: <comment>%s</comment>', $stylesheet));
         }
 
+        $reformat = $input->getOption('reformat');
+        assert(is_bool($reformat));
+
         $exporter->exportDirectory(
             $featuresDirectory,
             $targetDirectory,
             $tag,
-            $stylesheet
+            $stylesheet,
+            $reformat
         );
 
         return 0;

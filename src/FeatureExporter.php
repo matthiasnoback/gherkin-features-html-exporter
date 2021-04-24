@@ -11,6 +11,7 @@ use Behat\Gherkin\Loader\DirectoryLoader;
 use Behat\Gherkin\Loader\GherkinFileLoader;
 use Behat\Gherkin\Node\FeatureNode;
 use Behat\Gherkin\Parser as GherkinParser;
+use Gajus\Dindent\Indenter;
 use GherkinHtmlExporter\Console\ConsoleNotifications;
 use GherkinHtmlExporter\HtmlNode\LayoutHtmlNode;
 use League\CommonMark\CommonMarkConverter;
@@ -23,6 +24,7 @@ final class FeatureExporter
     private GherkinParser $parser;
     private Notifications $notifications;
     private HtmlPrinter $htmlPrinter;
+    private HtmlFormatter $htmlFormatter;
 
     public static function createWithDependencies(?OutputInterface $outputInterface = null): self
     {
@@ -37,27 +39,36 @@ final class FeatureExporter
         $lexer = new GherkinLexer($keywords);
         $gherkinParser = new GherkinParser($lexer);
 
+        $htmlFormatter = new HtmlFormatterUsingLibrary();
+
         return new self(
             $gherkinParser,
             new HtmlPrinter(
                 new CommonMarkConverter()
             ),
+            $htmlFormatter,
             new ConsoleNotifications($outputInterface)
         );
     }
 
-    public function __construct(GherkinParser $parser, HtmlPrinter $htmlPrinter, Notifications $notifications)
-    {
+    public function __construct(
+        GherkinParser $parser,
+        HtmlPrinter $htmlPrinter,
+        HtmlFormatter $htmlFormatter,
+        Notifications $notifications
+    ) {
         $this->parser = $parser;
         $this->htmlPrinter = $htmlPrinter;
         $this->notifications = $notifications;
+        $this->htmlFormatter = $htmlFormatter;
     }
 
     public function exportDirectory(
         string $featuresDirectory,
         string $targetDirectory,
         ?string $tag,
-        ?string $stylesheet
+        ?string $stylesheet,
+        bool $reformatHtml
     ): void {
         if (!is_dir($targetDirectory)) {
             mkdir($targetDirectory, 0777, true);
@@ -73,9 +84,9 @@ final class FeatureExporter
         $features = $gherkin->load($featuresDirectory);
 
         if (is_string($tag)) {
-            $this->exportAllFeaturesToSingleFile($features, $targetDirectory, $tag, $stylesheet);
+            $this->exportAllFeaturesToSingleFile($features, $targetDirectory, $tag, $stylesheet, $reformatHtml);
         } else {
-            $this->exportAllFeaturesSeparately($features, $targetDirectory, $stylesheet);
+            $this->exportAllFeaturesSeparately($features, $targetDirectory, $stylesheet, $reformatHtml);
         }
 
         $this->notifications->done();
@@ -88,15 +99,10 @@ final class FeatureExporter
         array $features,
         string $targetDirectory,
         string $tag,
-        ?string $stylesheet
+        ?string $stylesheet,
+        bool $reformat
     ): void {
-        $html = $this->htmlPrinter->nodeToHtml(
-            new LayoutHtmlNode(
-                $features,
-                $stylesheet,
-                $tag . ' features'
-            )
-        );
+        $html = $this->printFeaturesAsHtml($features, $stylesheet, $tag . ' features', $reformat);
 
         $targetFilePath = $targetDirectory . '/' . $tag . '.html';
 
@@ -108,16 +114,14 @@ final class FeatureExporter
     /**
      * @param array<FeatureNode> $features
      */
-    private function exportAllFeaturesSeparately(array $features, string $targetDirectory, ?string $stylesheet): void
-    {
+    private function exportAllFeaturesSeparately(
+        array $features,
+        string $targetDirectory,
+        ?string $stylesheet,
+        bool $reformat
+    ): void {
         foreach ($features as $feature) {
-            $html = $this->htmlPrinter->nodeToHtml(
-                new LayoutHtmlNode(
-                    [$feature],
-                    $stylesheet,
-                    $feature->getTitle() ?? 'Feature'
-                )
-            );
+            $html = $this->printFeaturesAsHtml([$feature], $stylesheet, $feature->getTitle() ?? 'Feature', $reformat);
 
             $featureFile = $feature->getFile();
             assert(is_string($featureFile));
@@ -130,5 +134,25 @@ final class FeatureExporter
 
             $this->notifications->htmlFileWasCreated($targetFilePath);
         }
+    }
+
+    /**
+     * @param array<FeatureNode> $features
+     */
+    private function printFeaturesAsHtml(array $features, ?string $stylesheet, string $title, bool $reformat): string
+    {
+        $html = $this->htmlPrinter->nodeToHtml(
+            new LayoutHtmlNode(
+                $features,
+                $stylesheet,
+                $title
+            )
+        );
+
+        if ($reformat) {
+            $html = $this->htmlFormatter->reformatHtml($html);
+        }
+
+        return $html;
     }
 }
