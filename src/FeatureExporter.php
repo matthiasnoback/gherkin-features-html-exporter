@@ -12,6 +12,7 @@ use Behat\Gherkin\Loader\GherkinFileLoader;
 use Behat\Gherkin\Node\FeatureNode;
 use Behat\Gherkin\Parser as GherkinParser;
 use GherkinHtmlExporter\HtmlNode\LayoutHtmlNode;
+use League\CommonMark\CommonMarkConverter;
 use ReflectionClass;
 use SplFileInfo;
 
@@ -19,8 +20,9 @@ final class FeatureExporter
 {
     private GherkinParser $parser;
     private Notifications $notifications;
+    private HtmlPrinter $htmlPrinter;
 
-    public function __construct(Notifications $notifications)
+    public static function createWithDependencies(Notifications $notifications): self
     {
         // Copied from \Codeception\Test\Loader\Gherkin
         $gherkin = new ReflectionClass(Gherkin::class);
@@ -31,8 +33,21 @@ final class FeatureExporter
         $i18n = require $gherkinClassPath . '/../../../i18n.php';
         $keywords = new GherkinKeywords($i18n);
         $lexer = new GherkinLexer($keywords);
-        $this->parser = new GherkinParser($lexer);
+        $gherkinParser = new GherkinParser($lexer);
 
+        return new self(
+            $gherkinParser,
+            new HtmlPrinter(
+                new CommonMarkConverter()
+            ),
+            $notifications
+        );
+    }
+
+    public function __construct(GherkinParser $parser, HtmlPrinter $htmlPrinter, Notifications $notifications)
+    {
+        $this->parser = $parser;
+        $this->htmlPrinter = $htmlPrinter;
         $this->notifications = $notifications;
     }
 
@@ -73,7 +88,7 @@ final class FeatureExporter
         string $tag,
         ?string $stylesheet
     ): void {
-        $html = (new HtmlPrinter())->nodeToHtml(
+        $html = $this->htmlPrinter->nodeToHtml(
             new LayoutHtmlNode(
                 $features,
                 $stylesheet,
@@ -94,7 +109,7 @@ final class FeatureExporter
     private function exportAllFeaturesSeparately(array $features, string $targetDirectory, ?string $stylesheet): void
     {
         foreach ($features as $feature) {
-            $html = (new HtmlPrinter())->nodeToHtml(
+            $html = $this->htmlPrinter->nodeToHtml(
                 new LayoutHtmlNode(
                     [$feature],
                     $stylesheet,

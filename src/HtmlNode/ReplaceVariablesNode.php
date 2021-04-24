@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace GherkinHtmlExporter\HtmlNode;
 
-use GherkinHtmlExporter\Html;
 use GherkinHtmlExporter\HtmlPrinter;
 use function strtr;
 
@@ -22,7 +21,7 @@ final class ReplaceVariablesNode implements HtmlNode
     {
         $replacements = [];
         foreach ($this->variables as $key => $value) {
-            $replacements['{' . $key . '}'] = Html::escape($value);
+            $replacements['{' . $key . '}'] = $htmlPrinter->escape($value);
         }
 
         return strtr($this->template, $replacements);

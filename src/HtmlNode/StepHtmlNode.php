@@ -5,7 +5,6 @@ namespace GherkinHtmlExporter\HtmlNode;
 
 use Behat\Gherkin\Node\ArgumentInterface;
 use Behat\Gherkin\Node\StepNode;
-use GherkinHtmlExporter\Html;
 use GherkinHtmlExporter\HtmlPrinter;
 
 final class StepHtmlNode implements HtmlNode
@@ -24,7 +23,7 @@ final class StepHtmlNode implements HtmlNode
                 '<div class="step">',
                 new KeywordHtmlNode($this->step->getKeyword()),
                 ' ',
-                Html::escape($this->step->getText()),
+                $htmlPrinter->escape($this->step->getText()),
                 array_map(
                     fn(ArgumentInterface $argument) => new ArgumentHtmlNode($argument),
                     $this->step->getArguments()

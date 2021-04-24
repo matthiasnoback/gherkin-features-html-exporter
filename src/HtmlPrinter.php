@@ -4,9 +4,17 @@ declare(strict_types=1);
 namespace GherkinHtmlExporter;
 
 use GherkinHtmlExporter\HtmlNode\HtmlNode;
+use League\CommonMark\MarkdownConverterInterface;
 
 final class HtmlPrinter
 {
+    private MarkdownConverterInterface $markdownConverter;
+
+    public function __construct(MarkdownConverterInterface $markdownConverter)
+    {
+        $this->markdownConverter = $markdownConverter;
+    }
+
     public function nodeToHtml(HtmlNode $node): string
     {
         return $this->nodesToHtml([$node]);
@@ -42,12 +50,11 @@ final class HtmlPrinter
 
     public function markdownToHtml(string $markdown): string
     {
-        // TODO inject Markdown converter
-        return Html::markdownToHtml($markdown);
+        return $this->markdownConverter->convertToHtml($markdown);
     }
 
-    public function escape(string $string): string
+    public function escape(string $value): string
     {
-        return Html::escape($string);
+        return htmlspecialchars($value, ENT_QUOTES);
     }
 }

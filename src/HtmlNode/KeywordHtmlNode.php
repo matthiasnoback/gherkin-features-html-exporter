@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace GherkinHtmlExporter\HtmlNode;
 
-use GherkinHtmlExporter\Html;
 use GherkinHtmlExporter\HtmlPrinter;
 
 final class KeywordHtmlNode implements HtmlNode
@@ -20,7 +19,7 @@ final class KeywordHtmlNode implements HtmlNode
         return $htmlPrinter->nodesToHtml(
             [
                 '<span class="keyword">',
-                Html::escape($this->keyword),
+                $htmlPrinter->escape($this->keyword),
                 '</span>'
             ]
         );

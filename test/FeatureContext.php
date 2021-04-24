@@ -3,7 +3,6 @@
 namespace Test;
 
 use Behat\Behat\Context\Context;
-use Behat\Behat\Tester\Exception\PendingException;
 use GherkinHtmlExporter\FeatureExporter;
 use PHPUnit\Framework\Assert;
 use function Safe\preg_replace;
@@ -26,7 +25,7 @@ final class FeatureContext implements Context
         $this->exportDir = sys_get_temp_dir() . '/' . uniqid('export');
         mkdir($this->exportDir);
 
-        $this->exporter = new FeatureExporter(new EchoNotifications());
+        $this->exporter = FeatureExporter::createWithDependencies(new EchoNotifications());
     }
 
     /**
