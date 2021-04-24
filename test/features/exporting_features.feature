@@ -208,6 +208,50 @@ Feature: Exporting features to HTML
     """
     And the file "interesting.html" should not contain "irrelevant"
 
+  Scenario: generate a table of contents
+
+    Given the directory "features" has a file called "interesting_1.feature" containing:
+    """
+    @interesting
+    Feature: to be included 1
+      Scenario:
+        Given step
+    """
+    And this directory has a file called "interesting_2.feature" containing:
+    """
+    @interesting
+    Feature: to be included 2
+      Scenario:
+        Given step
+    """
+    When I export this directory to HTML providing the tag "interesting"
+    Then the export directory should have a file called "interesting.html" containing:
+    """
+    <div class="table-of-contents">
+      <div class="table-of-contents-title">Table of contents</div>
+      <ul>
+        <li>
+          <a href="#d20dbc93b3f8be5f9c91b02de0b38a27">To be included 1</a>
+        </li>
+        <li>
+          <a href="#3b2192aa16c02b0fe12de7b002f80eef">To be included 2</a>
+        </li>
+      </ul>
+    </div>
+    """
+    And this file should also contain:
+    """
+    <a id="d20dbc93b3f8be5f9c91b02de0b38a27"></a>
+    <div class="feature">
+      <div class="feature-title"><span class="keyword">Feature</span>: <span class="title">to be included 1</span></div>
+    """
+    And this file should also contain:
+    """
+    <a id="3b2192aa16c02b0fe12de7b002f80eef"></a>
+    <div class="feature">
+      <div class="feature-title"><span class="keyword">Feature</span>: <span class="title">to be included 2</span></div>
+    """
+
   Scenario: wrap everything in a layout, add a title, and include the CSS
 
     Given the directory "features" has a file called "interesting.feature" containing:
@@ -228,11 +272,9 @@ Feature: Exporting features to HTML
       <link rel="stylesheet" href="style.css">
     </head>
     <body>
-      <div class="feature">
     """
     And this file should also contain:
     """
-      </div>
     </body>
     </html>
     """

@@ -12,6 +12,7 @@ use GherkinHtmlExporter\TitleAndDescription;
 assert($feature instanceof FeatureNode);
 
 ?>
+<a id="<?php echo md5(basename($feature->getFile()) . $feature->getLine()); ?>"></a>
 <div class="feature">
     <div class="feature-title"><span class="keyword"><?php echo Html::escape($feature->getKeyword()); ?></span>:<?php if (is_string($feature->getTitle())) { ?> <span class="title"><?php echo Html::escape($feature->getTitle()); ?></span><?php } ?></div>
     <?php
