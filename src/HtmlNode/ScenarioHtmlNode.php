@@ -1,11 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace GherkinHtmlExporter;
+namespace GherkinHtmlExporter\HtmlNode;
 
 use Behat\Gherkin\Node\BackgroundNode;
 use Behat\Gherkin\Node\OutlineNode;
 use Behat\Gherkin\Node\ScenarioLikeInterface;
+use GherkinHtmlExporter\HtmlPrinter;
 
 final class ScenarioHtmlNode implements HtmlNode
 {

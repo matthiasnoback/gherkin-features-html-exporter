@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace GherkinHtmlExporter;
 
+use GherkinHtmlExporter\HtmlNode\HtmlNode;
+
 final class HtmlPrinter
 {
     public function nodeToHtml(HtmlNode $node): string

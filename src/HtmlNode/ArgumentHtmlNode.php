@@ -1,11 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace GherkinHtmlExporter;
+namespace GherkinHtmlExporter\HtmlNode;
 
 use Behat\Gherkin\Node\ArgumentInterface;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
+use GherkinHtmlExporter\HtmlPrinter;
 use RuntimeException;
 
 final class ArgumentHtmlNode implements HtmlNode

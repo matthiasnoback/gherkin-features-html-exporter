@@ -11,6 +11,7 @@ use Behat\Gherkin\Loader\DirectoryLoader;
 use Behat\Gherkin\Loader\GherkinFileLoader;
 use Behat\Gherkin\Node\FeatureNode;
 use Behat\Gherkin\Parser as GherkinParser;
+use GherkinHtmlExporter\HtmlNode\LayoutHtmlNode;
 use ReflectionClass;
 use SplFileInfo;
 

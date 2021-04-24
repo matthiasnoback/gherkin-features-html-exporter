@@ -1,7 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace GherkinHtmlExporter;
+namespace GherkinHtmlExporter\HtmlNode;
+
+use GherkinHtmlExporter\Html;
+use GherkinHtmlExporter\HtmlPrinter;
+use function strtr;
 
 final class ReplaceVariablesNode implements HtmlNode
 {

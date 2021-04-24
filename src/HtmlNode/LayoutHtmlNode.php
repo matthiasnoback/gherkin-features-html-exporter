@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace GherkinHtmlExporter;
+namespace GherkinHtmlExporter\HtmlNode;
 
 use Behat\Gherkin\Node\FeatureNode;
-use League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
+use GherkinHtmlExporter\HtmlPrinter;
 
 final class LayoutHtmlNode implements HtmlNode
 {

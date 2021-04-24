@@ -1,9 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace GherkinHtmlExporter;
+namespace GherkinHtmlExporter\HtmlNode;
 
 use Behat\Gherkin\Node\TableNode;
+use GherkinHtmlExporter\HtmlPrinter;
 
 final class TableHtmlNode implements HtmlNode
 {

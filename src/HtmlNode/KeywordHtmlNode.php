@@ -1,7 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace GherkinHtmlExporter;
+namespace GherkinHtmlExporter\HtmlNode;
+
+use GherkinHtmlExporter\Html;
+use GherkinHtmlExporter\HtmlPrinter;
 
 final class KeywordHtmlNode implements HtmlNode
 {

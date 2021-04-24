@@ -1,9 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace GherkinHtmlExporter;
+namespace GherkinHtmlExporter\HtmlNode;
 
 use Behat\Gherkin\Node\StepNode;
+use GherkinHtmlExporter\HtmlPrinter;
 
 final class StepsHtmlNode implements HtmlNode
 {
