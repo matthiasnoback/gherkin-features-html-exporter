@@ -20,6 +20,14 @@ The stylesheet is *optional* and should be present in the provided `[export/]` d
 
 For each `.feature` file in `[features/]` a corresponding `.html` file will be generated in `[export/]`.
 
+### Merge all features into single file
+
+An option allow to output all html into a single index.html file. Recommanded for small amount of features, but convenient if you want simply expose all your features.
+
+```bash
+vendor/bin/export-gherkin [features/] [export/] --stylesheet style.css --merge
+```
+
 ### Combine features by tag
 
 Another way to use this tool is to combine all features with a given tag in a single `.html` file named by that tag:
