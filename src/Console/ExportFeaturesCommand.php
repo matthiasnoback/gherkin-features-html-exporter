@@ -20,7 +20,8 @@ final class ExportFeaturesCommand extends Command
             ->addArgument('targetDirectory', InputArgument::REQUIRED)
             ->addOption('tag', 't', InputOption::VALUE_REQUIRED)
             ->addOption('stylesheet', 's', InputOption::VALUE_REQUIRED)
-            ->addOption('reformat', 'r', InputOption::VALUE_NONE);
+            ->addOption('reformat', 'r', InputOption::VALUE_NONE)
+            ->addOption('merge', 'm', InputOption::VALUE_NONE);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -41,6 +42,12 @@ final class ExportFeaturesCommand extends Command
             $output->writeln(sprintf('Filter by tag: <comment>%s</comment>', $tag));
         }
 
+        $merge = $input->getOption('merge');
+        assert(is_bool($merge));
+        if ($merge === true) {
+            $output->writeln('Merging all features into single file');
+        }
+
         $stylesheet = $input->getOption('stylesheet');
         assert($stylesheet === null || is_string($stylesheet));
         if (is_string($stylesheet)) {
@@ -55,7 +62,8 @@ final class ExportFeaturesCommand extends Command
             $targetDirectory,
             $tag,
             $stylesheet,
-            $reformat
+            $reformat,
+            $merge
         );
 
         return 0;

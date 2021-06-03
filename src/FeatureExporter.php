@@ -68,7 +68,8 @@ final class FeatureExporter
         string $targetDirectory,
         ?string $tag,
         ?string $stylesheet,
-        bool $reformatHtml
+        bool $reformatHtml,
+        bool $merge = false
     ): void {
         if (!is_dir($targetDirectory)) {
             mkdir($targetDirectory, 0777, true);
@@ -85,6 +86,8 @@ final class FeatureExporter
 
         if (is_string($tag)) {
             $this->exportAllFeaturesToSingleFile($features, $targetDirectory, $tag, $stylesheet, $reformatHtml);
+        } elseif ($merge) {
+            $this->exportAllFeaturesToSingleFile($features, $targetDirectory, 'index', $stylesheet, $reformatHtml);
         } else {
             $this->exportAllFeaturesSeparately($features, $targetDirectory, $stylesheet, $reformatHtml);
         }
