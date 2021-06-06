@@ -22,10 +22,10 @@ For each `.feature` file in `[features/]` a corresponding `.html` file will be g
 
 ### Merge all features into single file
 
-An option allow to output all html into a single index.html file. Recommanded for small amount of features, but convenient if you want simply expose all your features.
+This option allow you to output all html into a single file. Recommanded for small amount of features, but convenient if you want simply expose all your features.
 
 ```bash
-vendor/bin/export-gherkin [features/] [export/] --stylesheet style.css --merge
+vendor/bin/export-gherkin [features/] [export/] --stylesheet style.css --merge myFileName
 ```
 
 ### Combine features by tag

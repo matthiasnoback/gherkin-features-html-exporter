@@ -21,7 +21,7 @@ final class ExportFeaturesCommand extends Command
             ->addOption('tag', 't', InputOption::VALUE_REQUIRED)
             ->addOption('stylesheet', 's', InputOption::VALUE_REQUIRED)
             ->addOption('reformat', 'r', InputOption::VALUE_NONE)
-            ->addOption('merge', 'm', InputOption::VALUE_NONE);
+            ->addOption('merge', 'm', InputOption::VALUE_REQUIRED);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -43,9 +43,9 @@ final class ExportFeaturesCommand extends Command
         }
 
         $merge = $input->getOption('merge');
-        assert(is_bool($merge));
-        if ($merge === true) {
-            $output->writeln('Merging all features into single file');
+        assert($merge === null || is_string($merge));
+        if (is_string($merge)) {
+            $output->writeln(sprintf('Merging all features into single file <comment>%s</comment>', $merge));
         }
 
         $stylesheet = $input->getOption('stylesheet');

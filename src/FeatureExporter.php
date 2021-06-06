@@ -69,7 +69,7 @@ final class FeatureExporter
         ?string $tag,
         ?string $stylesheet,
         bool $reformatHtml,
-        bool $merge = false
+        ?string $mergeToFile = null
     ): void {
         if (!is_dir($targetDirectory)) {
             mkdir($targetDirectory, 0777, true);
@@ -84,15 +84,26 @@ final class FeatureExporter
         /** @var FeatureNode[] $features */
         $features = $gherkin->load($featuresDirectory);
 
-        if (is_string($tag)) {
-            $this->exportAllFeaturesToSingleFile($features, $targetDirectory, $tag, $stylesheet, $reformatHtml);
-        } elseif ($merge) {
-            $this->exportAllFeaturesToSingleFile($features, $targetDirectory, 'index', $stylesheet, $reformatHtml);
+        $singleFileName = $this->getSingleFileName($tag, $mergeToFile);
+
+        if ($singleFileName !== null) {
+            $this->exportAllFeaturesToSingleFile($features, $targetDirectory, $singleFileName, $stylesheet, $reformatHtml);
         } else {
             $this->exportAllFeaturesSeparately($features, $targetDirectory, $stylesheet, $reformatHtml);
         }
 
         $this->notifications->done();
+    }
+
+    private function getSingleFileName(?string $tag, ?string $mergeToFile):? string {
+        $name = null;
+        if (is_string($tag)) {
+            $name = $tag;
+        }
+        if (is_string($mergeToFile)) {
+            $name = $mergeToFile;
+        }
+        return $name;
     }
 
     /**
@@ -101,13 +112,13 @@ final class FeatureExporter
     private function exportAllFeaturesToSingleFile(
         array $features,
         string $targetDirectory,
-        string $tag,
+        string $title,
         ?string $stylesheet,
         bool $reformat
     ): void {
-        $html = $this->printFeaturesAsHtml($features, $stylesheet, $tag . ' features', $reformat);
+        $html = $this->printFeaturesAsHtml($features, $stylesheet, $title . ' features', $reformat);
 
-        $targetFilePath = $targetDirectory . '/' . $tag . '.html';
+        $targetFilePath = $targetDirectory . '/' . $title . '.html';
 
         file_put_contents($targetFilePath, $html);
 

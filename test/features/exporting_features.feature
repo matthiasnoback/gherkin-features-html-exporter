@@ -185,6 +185,44 @@ Feature: Exporting features to HTML
     """
     And the file "interesting.html" should not contain "irrelevant"
 
+
+
+
+  Scenario: combine multiple features by tag in a single file with specified name
+    Given the directory "features" has a file called "interesting_1.feature" containing:
+    """
+    @interesting
+    Feature: to be included 1
+      Scenario:
+        Given step
+    """
+    And this directory has a file called "interesting_2.feature" containing:
+    """
+    @interesting
+    Feature: to be included 2
+      Scenario:
+        Given step
+    """
+    And this directory has a file called "irrelevant.feature" containing:
+    """
+    @irrelevant
+    Feature: irrelevant
+      Scenario:
+        Given step
+    """
+    When I export this directory to HTML providing the tag "interesting" and merge to "index"
+    Then the export directory should have a file called "index.html" containing:
+    """
+    to be included 1
+    """
+    And this file should also contain:
+    """
+    to be included 2
+    """
+    And the file "index.html" should not contain "irrelevant"
+
+
+
   Scenario: generate a table of contents
 
     Given the directory "features" has a file called "interesting_1.feature" containing:
